@@ -8,10 +8,6 @@ return [
      */
     'debug'  => true,
     /*
-     * 使用 Laravel 的缓存系统
-     */
-    'use_laravel_cache' => true,
-    /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
     'app_id'  => env('WECHAT_OP_APPID', 'your-app-id'),         // AppID
@@ -19,7 +15,7 @@ return [
     'token'   => env('WECHAT_OP_TOKEN', 'your-token'),          // Token
     'aes_key' => env('WECHAT_OP_AES_KEY', ''),                    // EncodingAESKey
     'cache'   => [
-        'driver' => 'filesystem',    // redis, filesystem
+        'driver' => 'laravel',    // redis, filesystem, laravel
         'dir' => storage_path('tmp')
     ],
     /*
