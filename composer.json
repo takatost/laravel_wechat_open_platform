@@ -1,0 +1,27 @@
+{
+    "name": "takatost/laravel_wechat_open_platform",
+    "description": "Wechat Open Platform Package For Laravel",
+    "keywords": [
+      "wechat",
+      "weixin",
+      "laravel",
+      "sdk",
+      "open-platform",
+      "wechat-open-platform"
+    ],
+    "require": {
+        "takatost/wechat_open_platform": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "takatost",
+            "email": "takatost@gmail.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "LaravelWechatOP\\": "src/"
+      }
+    }
+}
