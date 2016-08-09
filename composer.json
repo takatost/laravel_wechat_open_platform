@@ -10,7 +10,7 @@
       "wechat-open-platform"
     ],
     "require": {
-        "takatost/wechat_open_platform": "dev-master"
+        "takatost/wechat_open_platform": "~1.0"
     },
     "license": "MIT",
     "authors": [
