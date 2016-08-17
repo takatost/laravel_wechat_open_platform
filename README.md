@@ -37,6 +37,7 @@ Wechat Open Platform Package For Laravel
 
 ## 使用
 
+授权流程详见：[开放平台文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1453779503&token=&lang=zh_CN)
 我们可以通过 `app('wechat_op')` 或外观 `WechatOP`来获取开放平台应用对象。
 
 ### 跳转公众号授权页
@@ -51,9 +52,12 @@ return $response;
 
 ### 授权回调信息获取
 
+授权后需要记录公众号的 `appid` 和 `authorizer_refresh_token` 以代公众号实现业务。
+
 ```
 $authInfo = WechatOP::oauth->user();
-/** {
+/** 
+{
   "id": "appid",
   "name": "公众号名称",
   "nickname": "公众号名称",
@@ -104,4 +108,45 @@ $authInfo = WechatOP::oauth->user();
   }
 }
 **/
+```
+
+### 接收事件
+
+```
+$server = WechatOP::server;
+$server->setMessageHandler(function($message) {
+        switch ($message->get('InfoType')) {
+            case "component_verify_ticket":
+                // 保存开放平台 ticket
+                env('wechat_op')->saveTicket($message->get('ComponentVerifyTicket'));
+                break;
+            case "unauthorized":                
+                // 公众号取消授权记录
+                break;
+            default:
+                break;
+        }
+    });
+    
+return $server->serve();
+```
+
+### 代公众号实现业务
+
+每个平台下的公众号都需要单独传入配置
+
+```
+$options = [
+        'app_id'    => '公众号 app_id',
+        'secret'    => '公众号 secret',   // 仅适用于 单独配置公众号
+        'token'     => '公众号 token',   // 仅适用于 单独配置公众号
+        'aes_key'   => '公众号 aes_key',   // 仅适用于 单独配置公众号
+        'auth_type' => 'COMPONENT', // COMPONENT 开放品台授权公众号，MANUAL 单独配置公众号
+        'component_refresh_token' => 'component_refresh_token',   // 授权回调时获取的 authorizer_refresh_token，仅适用于 开放品台授权公众号
+        'oauth'     => [
+            'scopes' => ['snsapi_base'] // 公众号授权用户方式 snsapi_base, snsapi_userinfo
+        ],
+    ];
+
+$wechatApp = WechatOP::app($options);
 ```
