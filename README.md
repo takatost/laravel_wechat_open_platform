@@ -150,3 +150,5 @@ $options = [
 
 $wechatApp = WechatOP::app($options);
 ```
+
+`$wechatApp` 为 `EasyWechat\Foundation\Application` 对象，使用方式见 [EasyWeChat 文档](https://easywechat.org/zh-cn/docs/)
