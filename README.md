@@ -44,7 +44,7 @@ Wechat Open Platform Package For Laravel
 
 ```
 $callbackUrl = 'http://for.bar/callback'; // 授权回调地址
-$response = WechatOP::oauth->redirect($callbackUrl);  // 或 $response = app('wechat_op')->oauth->redirect($authCallbackUrl);
+$response = WechatOP::oauth()->redirect($callbackUrl);  // 或 $response = app('wechat_op')->oauth->redirect($authCallbackUrl);
 // 获取跳转地址 $redirectUrl = $response->getTargetUrl();
 
 return $response;
@@ -55,7 +55,7 @@ return $response;
 授权后需要记录公众号的 `appid` 和 `authorizer_refresh_token` 以代公众号实现业务。
 
 ```
-$authInfo = WechatOP::oauth->user();
+$authInfo = WechatOP::oauth()->user();
 /** 
 {
   "id": "appid",
@@ -113,7 +113,7 @@ $authInfo = WechatOP::oauth->user();
 ### 接收事件
 
 ```
-$server = WechatOP::server;
+$server = WechatOP::server();
 $server->setMessageHandler(function($message) {
         switch ($message->get('InfoType')) {
             case "component_verify_ticket":
