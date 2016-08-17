@@ -42,9 +42,66 @@ Wechat Open Platform Package For Laravel
 ### 跳转公众号授权页
 
 ```
-$response = WechatOP::oauth->redirect($authCallbackUrl)
-// 或 $response = app('wechat_op')->oauth->redirect($authCallbackUrl)
+$callbackUrl = 'http://for.bar/callback'; // 授权回调地址
+$response = WechatOP::oauth->redirect($callbackUrl);  // 或 $response = app('wechat_op')->oauth->redirect($authCallbackUrl);
 // 获取跳转地址 $redirectUrl = $response->getTargetUrl();
 
 return $response;
+```
+
+### 授权回调信息获取
+
+```
+$authInfo = WechatOP::oauth->user();
+/** {
+  "id": "appid",
+  "name": "公众号名称",
+  "nickname": "公众号名称",
+  "avatar": "公众号头像",
+  "email": null,
+  "authorizer_info": {
+    "nick_name": "公众号名称",
+    "head_img": "公众号头像",
+    "service_type_info": {
+      "id": 2
+    },
+    "verify_type_info": {
+      "id": 0
+    },
+    "user_name": "公众号ID",
+    "business_info": {
+      "open_store": 1,
+      "open_scan": 1,
+      "open_pay": 1,
+      "open_card": 1,
+      "open_shake": 1
+    },
+    "alias": "公众号别名"
+  },
+  "qrcode_url": "公众号二维码图片地址",
+  "authorization_info": {
+    "authorizer_appid": "appid",
+    "authorizer_access_token": "authorizer_access_token",
+    "expires_in": 7200,
+    "authorizer_refresh_token": "authorizer_refresh_token",
+    "func_info": [
+      {
+        "funcscope_category": {
+          "id": 1
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 2
+        }
+      },
+      {
+        "funcscope_category": {
+          "id": 3
+        }
+      }
+    ]
+  }
+}
+**/
 ```
